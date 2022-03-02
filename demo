@@ -1,0 +1,334 @@
+# Example
+
+# https://www.elastic.co/guide/en/elasticsearch/reference/8.0/analysis-analyzers.html
+# Step 1: Finding best analyzer
+POST _analyze
+{
+  "analyzer": "standard",
+  "text":     "The quick brown fox 1 2."
+}
+
+POST _analyze
+{
+  "analyzer": "simple",
+  "text":     "The quick brown fox 1 2."
+}
+
+# Step 2: Create an index using that analyzer
+PUT /test
+{
+  "mappings": {
+    "properties": {
+      "field1": { "type": "text", "analyzer": "standard" }
+    }
+  }
+}
+
+# Step 3: Add document for that index
+POST test/_doc
+{
+  "field1": "This is a fox 1 document"
+}
+
+# Step 4: Search
+GET test/_search
+{
+  "query": {
+    "match": {
+      "field1": "foxx"
+    }
+  }
+}
+
+### Don't do this :P
+DELETE /product-index
+
+
+
+# Main data
+PUT /product-index
+{
+  "mappings": {
+    "properties": {
+      "first_name": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "last_name": {
+        "type": "text",
+        "analyzer": "simple"
+      },
+      "email": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "name": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "category": {
+        "type": "text",
+        "analyzer": "simple"
+      },
+      "price": {
+        "type": "double"
+      }
+    }
+  }
+}
+
+
+PUT product-index/_bulk
+  { "create": { } }
+  { "first_name": "Austin", "last_name": "Price", "email": "a_l_price@live.com", "name": "Womens Device", "category": "Clothing", "price": "94.99"}
+  { "create": { } }
+  { "first_name": "Benjamin", "last_name": "King", "email": "b.king@outlook.com", "name": "Car Whatchamacallit", "category": "Automotive", "price": "22.95"}
+  { "create": { } }
+  { "first_name": "Alexander", "last_name": "Davis", "email": "alexanderadavis@gmail.com", "name": "Sports Gizmo", "category": "Activity", "price": "25.95"}
+  { "create": { } }
+  { "first_name": "Danielle", "last_name": "Roberts", "email": "d_a_roberts5@outlook.com", "name": "Car Component", "category": "Automotive", "price": "122"}
+  { "create": { } }
+  { "first_name": "Robert", "last_name": "Moore", "email": "rmoore@hotmail.com", "name": "Sports Gizmo", "category": "Activity", "price": "59"}
+  { "create": { } }
+  { "first_name": "Sara", "last_name": "Flores", "email": "slflores84@aol.com", "name": "First Aid Instrument", "category": "Health", "price": "182"}
+  { "create": { } }
+  { "first_name": "John", "last_name": "Robinson", "email": "jrobinson@hotmail.com", "name": "Dining Doodad", "category": "Home", "price": "147"}
+  { "create": { } }
+  { "first_name": "Amber", "last_name": "Henderson", "email": "a.e.henderson@live.com", "name": "Jewelry Equipment", "category": "Clothing", "price": "118.99"}
+  { "create": { } }
+  { "first_name": "Justin", "last_name": "Cooper", "email": "jecooper@live.com", "name": "Movie Doodad", "category": "Entertainment", "price": "197.99"}
+  { "create": { } }
+  { "first_name": "Tyler", "last_name": "Sanchez", "email": "tylerasanchez@yahoo.com", "name": "Movie Whatchamacallit", "category": "Entertainment", "price": "188"}
+  { "create": { } }
+  { "first_name": "Ethan", "last_name": "Cox", "email": "ethan.r@live.com", "name": "Vitamin Gear", "category": "Health", "price": "39.99"}
+  { "create": { } }
+  { "first_name": "Owen", "last_name": "Garcia", "email": "o_h_garcia81@outlook.com", "name": "Baby Equipment", "category": "Clothing", "price": "50.99"}
+  { "create": { } }
+  { "first_name": "Mark", "last_name": "Bailey", "email": "m_bailey@hotmail.com", "name": "Mens Accessory", "category": "Clothing", "price": "30"}
+  { "create": { } }
+  { "first_name": "Jessica", "last_name": "Bailey", "email": "j_bailey@gmail.com", "name": "Nutrition Accessory", "category": "Health", "price": "114.95"}
+  { "create": { } }
+  { "first_name": "Erin", "last_name": "Morgan", "email": "erin.morgan@ymail.com", "name": "Sports Item", "category": "Activity", "price": "42"}
+  { "create": { } }
+  { "first_name": "Patrick", "last_name": "Morgan", "email": "pmorgan@gmail.com", "name": "Biking Whatchamacallit", "category": "Activity", "price": "119.99"}
+  { "create": { } }
+  { "first_name": "Jose", "last_name": "Alexander", "email": "j_alexander@yahoo.com", "name": "Mens Widget", "category": "Clothing", "price": "139.99"}
+  { "create": { } }
+  { "first_name": "Tiffany", "last_name": "Perry", "email": "t_d_perry46@yahoo.com", "name": "Fitness Tool", "category": "Activity", "price": "76.95"}
+  { "create": { } }
+  { "first_name": "Steven", "last_name": "Cook", "email": "smcook82@ymail.com", "name": "Mens Kit", "category": "Clothing", "price": "49"}
+  { "create": { } }
+  { "first_name": "Stephanie", "last_name": "Simmons", "email": "s.k@aol.com", "name": "Mens Gadget", "category": "Clothing", "price": "185"}
+  { "create": { } }
+  { "first_name": "Kyle", "last_name": "Robinson", "email": "kmrobinson@ymail.com", "name": "Computer Whatchamacallit", "category": "Electronics", "price": "87.95"}
+  { "create": { } }
+  { "first_name": "Michael", "last_name": "Simmons", "email": "m.t.simmons@gmail.com", "name": "Jewelry Mechanism", "category": "Clothing", "price": "66.95"}
+  { "create": { } }
+  { "first_name": "Timothy", "last_name": "Thomas", "email": "timothyjames@outlook.com", "name": "Hair Care Gadget", "category": "Beauty", "price": "120.95"}
+  
+
+# A simple query
+GET product-index/_search
+{
+"query": {
+  "bool": {
+    "must": [{ "match": { "category": "clothing" } }]
+    }
+  }
+}
+
+# Multi condition query
+GET product-index/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "category": "clothing"
+          }
+        },
+        {
+          "range": {
+            "price": {
+              "gte": 50,
+              "lte": 100
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+# Query with sorting
+GET product-index/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "category": "clothing"
+          }
+        },
+        {
+          "range": {
+            "price": {
+              "gte": 50,
+              "lte": 100
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "price": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+  
+GET product-index/_search
+{
+"query": {
+  "bool": {
+    "must": [{ "match": { "email": "ymail" } }]
+    }
+  }
+}
+
+POST product-index/_analyze
+{
+  "analyzer": "standard",
+  "text":     "kmrobinson@ymail.com"
+}
+
+DELETE /product-index
+
+PUT /product-index
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "autocomplete": {
+          "tokenizer": "autocomplete",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "autocomplete_search": {
+          "tokenizer": "lowercase"
+        }
+      },
+      "tokenizer": {
+        "autocomplete": {
+          "type": "edge_ngram",
+          "min_gram": 3,
+          "max_gram": 20,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "first_name": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "last_name": {
+        "type": "text",
+        "analyzer": "simple"
+      },
+      "email": {
+        "type": "text",
+        "analyzer": "autocomplete",
+        "search_analyzer": "autocomplete_search"
+      },
+      "name": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "category": {
+        "type": "text",
+        "analyzer": "simple"
+      },
+      "price": {
+        "type": "text",
+        "analyzer": "standard"
+      }
+    }
+  }
+}
+
+POST product-index/_analyze
+{
+  "analyzer": "autocomplete",
+  "text": "kmrobinson@ymail.com"
+}
+
+
+PUT product-index/_bulk
+  { "create": { } }
+  { "first_name": "Austin", "last_name": "Price", "email": "a_l_price@live.com", "name": "Womens Device", "category": "Clothing", "price": "94.99"}
+  { "create": { } }
+  { "first_name": "Benjamin", "last_name": "King", "email": "b.king@outlook.com", "name": "Car Whatchamacallit", "category": "Automotive", "price": "22.95"}
+  { "create": { } }
+  { "first_name": "Alexander", "last_name": "Davis", "email": "alexanderadavis@gmail.com", "name": "Sports Gizmo", "category": "Activity", "price": "25.95"}
+  { "create": { } }
+  { "first_name": "Danielle", "last_name": "Roberts", "email": "d_a_roberts5@outlook.com", "name": "Car Component", "category": "Automotive", "price": "122"}
+  { "create": { } }
+  { "first_name": "Robert", "last_name": "Moore", "email": "rmoore@hotmail.com", "name": "Sports Gizmo", "category": "Activity", "price": "59"}
+  { "create": { } }
+  { "first_name": "Sara", "last_name": "Flores", "email": "slflores84@aol.com", "name": "First Aid Instrument", "category": "Health", "price": "182"}
+  { "create": { } }
+  { "first_name": "John", "last_name": "Robinson", "email": "jrobinson@hotmail.com", "name": "Dining Doodad", "category": "Home", "price": "147"}
+  { "create": { } }
+  { "first_name": "Amber", "last_name": "Henderson", "email": "a.e.henderson@live.com", "name": "Jewelry Equipment", "category": "Clothing", "price": "118.99"}
+  { "create": { } }
+  { "first_name": "Justin", "last_name": "Cooper", "email": "jecooper@live.com", "name": "Movie Doodad", "category": "Entertainment", "price": "197.99"}
+  { "create": { } }
+  { "first_name": "Tyler", "last_name": "Sanchez", "email": "tylerasanchez@yahoo.com", "name": "Movie Whatchamacallit", "category": "Entertainment", "price": "188"}
+  { "create": { } }
+  { "first_name": "Ethan", "last_name": "Cox", "email": "ethan.r@live.com", "name": "Vitamin Gear", "category": "Health", "price": "39.99"}
+  { "create": { } }
+  { "first_name": "Owen", "last_name": "Garcia", "email": "o_h_garcia81@outlook.com", "name": "Baby Equipment", "category": "Clothing", "price": "50.99"}
+  { "create": { } }
+  { "first_name": "Mark", "last_name": "Bailey", "email": "m_bailey@hotmail.com", "name": "Mens Accessory", "category": "Clothing", "price": "30"}
+  { "create": { } }
+  { "first_name": "Jessica", "last_name": "Bailey", "email": "j_bailey@gmail.com", "name": "Nutrition Accessory", "category": "Health", "price": "114.95"}
+  { "create": { } }
+  { "first_name": "Erin", "last_name": "Morgan", "email": "erin.morgan@ymail.com", "name": "Sports Item", "category": "Activity", "price": "42"}
+  { "create": { } }
+  { "first_name": "Patrick", "last_name": "Morgan", "email": "pmorgan@gmail.com", "name": "Biking Whatchamacallit", "category": "Activity", "price": "119.99"}
+  { "create": { } }
+  { "first_name": "Jose", "last_name": "Alexander", "email": "j_alexander@yahoo.com", "name": "Mens Widget", "category": "Clothing", "price": "139.99"}
+  { "create": { } }
+  { "first_name": "Tiffany", "last_name": "Perry", "email": "t_d_perry46@yahoo.com", "name": "Fitness Tool", "category": "Activity", "price": "76.95"}
+  { "create": { } }
+  { "first_name": "Steven", "last_name": "Cook", "email": "smcook82@ymail.com", "name": "Mens Kit", "category": "Clothing", "price": "49"}
+  { "create": { } }
+  { "first_name": "Stephanie", "last_name": "Simmons", "email": "s.k@aol.com", "name": "Mens Gadget", "category": "Clothing", "price": "185"}
+  { "create": { } }
+  { "first_name": "Kyle", "last_name": "Robinson", "email": "kmrobinson@ymail.com", "name": "Computer Whatchamacallit", "category": "Electronics", "price": "87.95"}
+  { "create": { } }
+  { "first_name": "Michael", "last_name": "Simmons", "email": "m.t.simmons@gmail.com", "name": "Jewelry Mechanism", "category": "Clothing", "price": "66.95"}
+  { "create": { } }
+  { "first_name": "Timothy", "last_name": "Thomas", "email": "timothyjames@outlook.com", "name": "Hair Care Gadget", "category": "Beauty", "price": "120.95"}
+  
+
+GET product-index/_search
+{
+"query": {
+  "bool": {
+    "must": [{ "match": { "email": "ymail" } }]
+    }
+  }
+}
